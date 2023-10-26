@@ -49,7 +49,15 @@
                 if (!isValid) {
                     return false;
                 }
-                if(oldpass!=Newpass)
+               
+                 var isValidPassword = /^.{8}$/.test(Newpass.value);
+                if (!isValidPassword)
+                {
+                    valNew.innerHTML = "Password should contain eight characters";
+                    Newpass.focus();
+                    return false;
+                }
+                else if(conf!=Newpass)
                 {
                      valCon.innerHTML = "Confirm Password is required";
                     conf.focus();
@@ -58,6 +66,15 @@
                 return true;
             }
         </script>
+         <script>
+             function change()
+             {
+                         var oldpass = document.getElementById("oldpass");
+                          var valOld = document.getElementById("valOld");
+                            valOld.innerHTML = "Incorrect old password";
+                            oldpass.focus();
+                        }
+                     </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
@@ -95,7 +112,12 @@
    String op = request.getParameter("old");
             String p = request.getParameter("newpass");
             String cp = request.getParameter("confirm");
-            Connection con = null;
+                       Connection con = null;
+               if(op!=null){
+               %>
+               <%
+        
+ 
             try {
                     String email = (String) session.getAttribute("email");
                     Class.forName("com.mysql.cj.jdbc.Driver");
@@ -108,11 +130,16 @@
                     int n = ps.executeUpdate();
                     if (n > 0) {
                     } else {
+                    %>
+                    <script>
+                        change();
+                        </script>
+    <%
                     }
                 }
-
+                
             catch (Exception e) {
                 System.out.println(e);
             }
-                
+                   }  
             %>
