@@ -15,10 +15,14 @@
         java.sql.DriverManager,
         java.sql.PreparedStatement"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="change.css">
         <script>
-               function validate()
+            function validate()
             {
 
                 var oldpass = document.getElementById("oldpass");
@@ -40,7 +44,7 @@
                     Newpass.focus();
                     isValid = false;
                 }
-                  valCon.innerHTML = "";
+                valCon.innerHTML = "";
                 if (!conf.value) {
                     valCon.innerHTML = "Confirm Password is required";
                     conf.focus();
@@ -49,97 +53,98 @@
                 if (!isValid) {
                     return false;
                 }
-               
-                 var isValidPassword = /^.{8}$/.test(Newpass.value);
+
+                var isValidPassword = /^.{8}$/.test(Newpass.value);
                 if (!isValidPassword)
                 {
                     valNew.innerHTML = "Password should contain eight characters";
                     Newpass.focus();
                     return false;
-                }
-                else if(conf!=Newpass)
+                } else if (conf != Newpass)
                 {
-                     valCon.innerHTML = "Confirm Password is required";
+                    valCon.innerHTML = "Confirm Password is required";
                     conf.focus();
                     isValid = false;
                 }
                 return true;
             }
         </script>
-         <script>
-             function change()
-             {
-                         var oldpass = document.getElementById("oldpass");
-                          var valOld = document.getElementById("valOld");
-                            valOld.innerHTML = "Incorrect old password";
-                            oldpass.focus();
-                        }
-                     </script>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+
+
     </head>
+
     <body>
-        <!DOCTYPE html>
-    <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Document</title>
-            <link rel="stylesheet" href="change.css">
-        </head>
-        <body>
-            <form action="" onsubmit="return validate()">
-                <div id="container">
-                    <div id="first">
-                        <div id="divone">Change Password</div>
-                        <div class="divtwo">Enter Your old password:</div>
-                        <div class="divtwo"><input type="password" name="old" class="input" id="oldpass"></div>
-                        <span id="valOld" style="color: red"></span>
-                        <div class="divtwo">Enter Your new password:</div>
-                        <div class="divtwo"><input type="password" name="newpass" class="input" id="Newpass"></div>
-                        <span id="valNew" style="color: red"></span>
-                        <div class="divtwo">Confirm Password</div>
-                        <div class="divtwo"><input type="password" name="confirm" class="input" id="conf"></div>
-                        <span id="valCon" style="color: red"></span>
-                        <div id="button"><input type="submit" value="Save"></div>
-                        <div class="divtwo"><a href='profile.jsp'>Back</a></div>
-                    </div>
+        <form action="" onsubmit="return validate()">
+            <div id="container">
+                <div id="first">
+                    <div id="divone">Change Password</div>
+                    <div class="divtwo">Enter Your old password:</div>
+                    <div class="divtwo"><input type="password" name="old" class="input" id="oldpass"></div>
+                    <span id="valOld" style="color: red"></span>
+                    <div class="divtwo">Enter Your new password:</div>
+                    <div class="divtwo"><input type="password" name="newpass" class="input" id="Newpass"></div>
+                    <span id="valNew" style="color: red"></span>
+                    <div class="divtwo">Confirm Password</div>
+                    <div class="divtwo"><input type="password" name="confirm" class="input" id="conf"></div>
+                    <span id="valCon" style="color: red"></span>
+                    <div id="button"><input type="submit" value="Save"></div>
+                    <div class="divtwo"><a href='profile.jsp'>Back</a></div>
                 </div>
-            </form>
-        </body>
-    </html>
-    <%
-   String op = request.getParameter("old");
-            String p = request.getParameter("newpass");
-            String cp = request.getParameter("confirm");
-                       Connection con = null;
-               if(op!=null){
-               %>
-               <%
-        
+            </div>
+        </form>
+    </body>
+</html>
+<%
+String op = request.getParameter("old");
+        String p = request.getParameter("newpass");
+        String cp = request.getParameter("confirm");
+                   Connection con = null;
+           if(op!=null){
+
+         int n =0;
  
-            try {
-                    String email = (String) session.getAttribute("email");
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    System.out.println("Driver Loaded");
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ServletShop", "root", "Info@1234");
-                    System.out.println("Connection Done");
-                    PreparedStatement ps = con.prepareStatement("update shop set pass = ? where email = ?");
-                    ps.setString(1, p);
-                    ps.setString(2, email);
-                    int n = ps.executeUpdate();
-                    if (n > 0) {
-                    } else {
-                    %>
-                    <script>
-                        change();
-                        </script>
-    <%
-                    }
-                }
+        try {
+                String email = (String) session.getAttribute("email");
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                System.out.println("Driver Loaded");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ServletShop", "root", "Info@1234");
+                System.out.println("Connection Done");
+                PreparedStatement ps = con.prepareStatement("update shop set pass = ? where email = ?");
+                ps.setString(1, p);
+                ps.setString(2, email);
+                String old = (String)session.getAttribute("pass");
+                if(op.equals(old))
+                {
                 
-            catch (Exception e) {
-                System.out.println(e);
-            }
-                   }  
-            %>
+                 n = ps.executeUpdate();
+}
+
+
+
+else{
+%>
+<script>
+    var old = document.getElementById("oldpass");
+    var valOld = document.getElementById("valOld");
+    valOld.innerHTML = "old password not correct";
+                        old.focus();
+                      
+    return false;
+</script>   
+<%
+  out.print("old password not correct");
+}
+//nt n = ps.executeUpdate();
+                
+if (n > 0) {
+
+} else {
+
+}
+}
+            
+catch (Exception e) {
+System.out.println(e);
+}
+}  
+%>

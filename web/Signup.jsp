@@ -85,13 +85,14 @@
                     return false; // Prevent the form from submitting
                 }
 
-                var isValidPhoneNumber = /^[6-9]\d{9}$/.test(phone.value);
+                 var isValidPhoneNumber = /^\d{10}$/.test(phone.value);
 
                 if (!isValidPhoneNumber) {
                     validNum.innerHTML = "Invalid Number!";
                     phone.focus();
                     return false;
                 }
+                
                 var isValidPassword = /^.{8}$/.test(password.value);
                 if (!isValidPassword)
                 {
@@ -108,6 +109,48 @@
 
                 return true;
 
+            }
+        </script>
+        <script>
+            function valPhone()
+            {
+              
+               var validNum = document.getElementById("valNum");
+               var phone = document.getElementById("phone");
+                var isValidPhoneNumber =  /^\d+$/.test(phone.value);
+                if (!isValidPhoneNumber) {
+                    validNum.innerHTML = "Phone number cannot be in characters.";
+                    phone.focus();
+                    return false;
+                }
+                else
+                {
+                     validNum.innerHTML = " ";
+                    phone.focus();
+                    return false;
+                }
+                return true;
+            }
+        </script>
+         <script>
+            function valName()
+            {
+              
+               var validName = document.getElementById("valName");
+                var name = document.getElementById("name");
+                var isValidName =  /.*\d.*/.test(name.value);
+                 if (isValidName) {
+                    validName.innerHTML = "Name cannot have numbers.";
+                    name.focus();
+                    return false;
+                }
+                else
+                {
+                     validName.innerHTML = "";
+                    name.focus();
+                    return false;
+                }
+                return true;
             }
         </script>
         <meta charset="UTF-8">
@@ -145,7 +188,7 @@
                             <form onsubmit="return validateForm()">
                                 <div class="form-group">
                                     <label for="name">Name:</label>
-                                    <input type="text" class="form-control" id="name" name="name">
+                                    <input type="text" class="form-control" id="name" name="name" onkeyup="return valName()">
                                     <span id="valName" class="validate"></span>
                                 </div>
                                 <div class="form-group">
@@ -160,7 +203,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="phone">Phone Number:</label>
-                                    <input type="tel" class="form-control" id="phone" name="phone">
+                                    <input type="tel" class="form-control" id="phone" name="phone" onkeyup="return valPhone()">
                                     <span id="valNum" class="validate"></span>
                                 </div>
 
@@ -209,7 +252,8 @@
                             ps.setString(5,ph);
                             int n = ps.executeUpdate();
                             if (n > 0) {
-                                response.sendRedirect("home.jsp");
+                                System.out.println("redirect");
+                                response.sendRedirect("signin.jsp");
                             }
                         } catch (Exception e) {
                             
