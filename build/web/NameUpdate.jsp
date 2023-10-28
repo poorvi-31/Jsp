@@ -16,64 +16,90 @@
         java.sql.PreparedStatement"%>
 <!DOCTYPE html>
 <html>
-  
-        <head>
-            <script>
-                function validate()
-                {
-                      var oldpass = document.getElementById("oldpass");
-                var Newpass = document.getElementById("Newpass");
-                var conf = document.getElementById("conf");
-                var valOld = document.getElementById("valOld");
+
+    <head>
+        <script>
+            function validate()
+            {
+                var name = document.getElementById("fn");
+                var valName = document.getElementById("valName");
+                
+                 valName.innerHTML = "";
+                 if (!name.value) {
+                    valName.innerHTML = "Name is required.";
+                    name.focus();
+                    return false;
                 }
-            </script>
-               <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Document</title>
-            <link rel="stylesheet" href="update.css">
-        </head>
-        <body>
-            <form>
-                <div class="container">
-                    <div class="first">
-                        <div class="input" id="head"><b><u>Enter Your New Username</u></b></div>
-                        <div class="input"><b>Username</b></div>
-                        <div class="input"><input type="text" name="fn"></div>
-                        <div class="input"><button type="submit" value="Save">Save</button></div>
-                        <div class="input"><a href="#">Back</a></div>
-                    </div>
+                return true;
+            }
+            function valName()
+            {
+                 var name = document.getElementById("fn");
+                var valName = document.getElementById("valName");
+                 var containsNumbers = /\d/.test(name.value);
+                if (containsNumbers) {
+                    valName.innerHTML = "Name cannot have numbers.";
+                    name.focus();
+                    return false; 
+                }
+                return true;
+            }
+        </script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="update.css">
+        <style>
+            #valName{
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <form onsubmit="return validate()">
+            <div class="container">
+                <div class="first">
+                    <div class="input" id="head"><b><u>Enter Your New Name</u></b></div>
+                    <div class="input"><b>Username</b></div>
+                    <div class="input"><input type="text" name="fn" id="fn" onkeyup="return valName()"></div>
+                    <span id="valName"></span>
+                    <div class="input"><button type="submit" value="Save">Save</button></div>
+                    <div class="input"><a href="home.jsp">Back</a></div>
                 </div>
-                <%
-                String p = request.getParameter("fn");
+            </div>
+        </form>
+    </body>
+</html>
+
+<%
+String p = request.getParameter("fn");
          
-            Connection con = null;
-            try {
+Connection con = null;
+try {
 
-            String fn = (String)session.getAttribute("email");
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            System.out.println("Driver Loaded");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ServletShop", "root", "Info@1234");
-            System.out.println("Connection Done");
-            //                String sql = "update shop set Fullname = ? where email = ?";
+String fn = (String)session.getAttribute("email");
+Class.forName("com.mysql.cj.jdbc.Driver");
+System.out.println("Driver Loaded");
+con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ServletShop", "root", "Info@1234");
+System.out.println("Connection Done");
+//                String sql = "update shop set Fullname = ? where email = ?";
 
-            PreparedStatement ps = con.prepareStatement("update shop set Fullname = ? where email = ?");
-            ps.setString(1,p);
-            ps.setString(2, fn);
-            int n = ps.executeUpdate();
-            if(n>0)
-            {
-            %>
-            <span>Updated</span>
-            <%
-            }
-            else
-            {
+PreparedStatement ps = con.prepareStatement("update shop set Fullname = ? where email = ?");
+ps.setString(1,p);
+ps.setString(2, fn);
+int n = ps.executeUpdate();
+if(n>0)
+{
+%>
+
+<%
+}
+else
+{
 //            out.print("Changes Not Saved");
-            }
-            } catch (Exception e) {
-            System.out.println(e);
-            }
-                %>
-        </body>
-    </html>
+}
+} catch (Exception e) {
+System.out.println(e);
+}
+%>

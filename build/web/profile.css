@@ -177,6 +177,9 @@ transform: scale(1.05);
     margin-left: 0px;
     text-align: center;
 }
-
+.etext
+{
+    margin-left: -50px ;
+}
 
 

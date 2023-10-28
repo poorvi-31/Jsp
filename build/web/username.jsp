@@ -1,6 +1,6 @@
 <%-- 
-    Document   : NameUpdate
-    Created on : 26-Oct-2023, 12:42:01 PM
+    Document   : username.jsp
+    Created on : 28-Oct-2023, 10:35:33 AM
     Author     : admin
 --%>
 
@@ -16,9 +16,7 @@
         java.sql.PreparedStatement"%>
 <!DOCTYPE html>
 <html>
-
-    <head>
-        <script>
+     <script>
             function validate()
             {
                 var name = document.getElementById("fn");
@@ -45,18 +43,12 @@
                 return true;
             }
         </script>
+    <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <link rel="stylesheet" href="update.css">
-        <style>
-            #valName{
-                color: red;
-            }
-        </style>
+        <title>JSP Page</title>
+          <link rel="stylesheet" href="update.css">
     </head>
-    <body>
+   <body>
         <form onsubmit="return validate()">
             <div class="container">
                 <div class="first">
@@ -71,7 +63,6 @@
         </form>
     </body>
 </html>
-
 <%
 String p = request.getParameter("fn");
          

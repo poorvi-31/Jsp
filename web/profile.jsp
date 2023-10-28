@@ -52,8 +52,8 @@ java.sql.PreparedStatement"%>
                     </div>
                     <div id='details'>
                         <div id='myoption'><span id='text1'>Name :&nbsp;&nbsp; <%= (String) session.getAttribute("fullname")%></span><button><a href='NameUpdate.jsp'>Edit</a></button></div>
-                        <div id='myoption'><span id='text1'>User Name :&nbsp;&nbsp;<%=(String) session.getAttribute("email")%></span><button><a href='#'>Edit</a></button></div>
-                        <div id='myoption'><span id='text1'>Email:&nbsp;&nbsp;<%=(String) session.getAttribute("fullname")%></span><button><a href='#'>Edit</a></button></div>
+                        <div id='myoption'><span id='text1'>User Name :&nbsp;&nbsp;<%=(String) session.getAttribute("email")%></span><button><a href='username.jsp'>Edit</a></button></div>
+                        <div id='myoption'><span id='text1' class="etext">Email:&nbsp;&nbsp;<%=(String) session.getAttribute("fullname")%></span></div>
                         <center><button id='back'><a href='home.jsp'>Back :</a></button></center>
                     </div>
                     <div id='last'><a href='ChangePass.jsp'>Change Password</a></div>

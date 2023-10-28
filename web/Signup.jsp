@@ -118,8 +118,20 @@
                var validNum = document.getElementById("valNum");
                var phone = document.getElementById("phone");
                 var isValidPhoneNumber =  /^\d+$/.test(phone.value);
+                var isValid =  /^\d{0,10}$/.test(phone.value);
+                 var starts =  /^[6-9]\d{0,9}$/.test(phone.value);
                 if (!isValidPhoneNumber) {
                     validNum.innerHTML = "Phone number cannot be in characters.";
+                    phone.focus();
+                    return false;
+                }
+                else if (!isValid) {
+                    validNum.innerHTML = "Phone number cannot have more than 10 digits";
+                    phone.focus();
+                    return false;
+                }
+                else if (!starts) {
+                    validNum.innerHTML = "Invalid Phone number.";
                     phone.focus();
                     return false;
                 }
@@ -150,6 +162,7 @@
                     name.focus();
                     return false;
                 }
+                
                 return true;
             }
         </script>
@@ -203,7 +216,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="phone">Phone Number:</label>
-                                    <input type="tel" class="form-control" id="phone" name="phone" onkeyup="return valPhone()">
+                                    <input type="tel" class="form-control" id="phone" name="phone" onkeyup="return valPhone()" max="10">
                                     <span id="valNum" class="validate"></span>
                                 </div>
 
